@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gemini/landing_page.dart';
 import 'package:flutter_gemini/providers/gemini_provider.dart';
 import 'package:flutter_gemini/providers/media_provider.dart';
 import 'package:flutter_gemini/screens/dashboard.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/colours.dart';
 
 void main() {
   // await dotenv.load(fileName: '.env');
@@ -20,10 +23,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => GeminiProvider()),
         ChangeNotifierProvider(create: (context) => MediaProvider()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Gemini ✨',
-        home: DashboardScreen(),
+        theme: ThemeData(
+          fontFamily: "Cairo",
+        colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
+        useMaterial3: true,
+      ),
+        title: 'PHONIX GOAL ⚽️',
+        home: LogoPage(),
       ),
     );
   }

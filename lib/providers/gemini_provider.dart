@@ -13,7 +13,10 @@ class GeminiProvider extends ChangeNotifier {
     if (key!.isEmpty) {
       throw Exception('GEMINI_API_KEY not found');
     }
-    return GenerativeModel(model: 'gemini-2.0-flash', apiKey: key);
+    return GenerativeModel(
+      model: 'gemini-2.0-flash', 
+      apiKey: key,
+      );
   }
 
   static final _geminiService = GeminiService(model: _initModel());
