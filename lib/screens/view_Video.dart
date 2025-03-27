@@ -41,7 +41,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     );
 
     // Initialize the controller and store the Future for later use.
-    // _initializeVideoPlayerFuture = _controller.initialize();
+    _initializeVideoPlayerFuture = _controller.initialize();
     _initVideoPlayer();
 
     // Use the controller to loop the video.
@@ -49,9 +49,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
     void _initVideoPlayer() async {
-    _controller = VideoPlayerController.networkUrl(
+    // _controller = VideoPlayerController.networkUrl(
+    //     Uri.parse(
+    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+    //   ),);
+
+       _controller = VideoPlayerController.networkUrl(
         Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+        'C:/Users/AlphaCoder/Downloads/player_test_1.mp4',
       ),);
 
     /// Initialize the video player
