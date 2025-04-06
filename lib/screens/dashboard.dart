@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gemini/screens/text_from_image.dart';
+import 'package:flutter_gemini/screens/player_scan.dart';
 import 'package:flutter_gemini/screens/text_from_text.dart';
+
+import 'player_training.dart';
 
 class DashboardScreen extends StatefulWidget {
   final String title;
@@ -27,30 +29,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 "قم بإختيار أحد الأنواع التالية",
                 style: TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     Navigator.of(context).push(
-              //       MaterialPageRoute(
-              //         builder: (context) => const TextFromTextScreen(),
-              //       ),
-              //     );
-              //   },
-              //   style: ElevatedButton.styleFrom(
-              //     side: const BorderSide(
-              //       color: Colors.black,
-              //       width: 1,
-              //     ),
-              //     backgroundColor: Colors.white,
-              //     foregroundColor: Colors.black,
-              //   ),
-              //   child: const Text('Text from Text'),
-              // ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -69,6 +54,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   foregroundColor: Colors.black,
                 ),
                 child: const Text('تحليل أداء اللاعب'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const PlayerTraining(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  side: const BorderSide(
+                    color: Colors.black,
+                    width: 1,
+                  ),
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                ),
+                child: const Text('تدريبات اللاعبين'),
               ),
             ],
           ),

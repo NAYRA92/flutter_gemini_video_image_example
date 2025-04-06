@@ -9,7 +9,7 @@ class LogoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3), (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen(title: 'PHONIX GOAL ⚽️',)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen(title: 'PHOENIX GOAL ⚽️',)));
     });
     return Scaffold(
       backgroundColor: Colors.white,
