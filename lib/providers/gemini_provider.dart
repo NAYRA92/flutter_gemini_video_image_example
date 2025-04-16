@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:d_chart/commons/data_model/data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gemini/services/gemini_service.dart';
@@ -14,14 +15,16 @@ class GeminiProvider extends ChangeNotifier {
       throw Exception('GEMINI_API_KEY not found');
     }
     return GenerativeModel(
-      model: 'gemini-2.0-flash', 
+      model: 'gemini-2.0-flash',
       apiKey: key,
-      );
+    );
   }
-
+List<int> indicatorList = []; 
   static final _geminiService = GeminiService(model: _initModel());
 
   String? response;
+  List<String>? indicator_list;
+  List<OrdinalData>? ordinalDataList ;
   bool isLoading = false;
 
   Future<void> generateContentFromText({
@@ -30,6 +33,7 @@ class GeminiProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     response = null;
+    indicator_list = null;
     response = await _geminiService.generateContentFromText(prompt: prompt);
     isLoading = false;
     notifyListeners();
@@ -42,6 +46,8 @@ class GeminiProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     response = null;
+    indicator_list = null;
+    ordinalDataList = null;
     final dataPart = DataPart(
       'video/',
       // 'image/jpeg',
@@ -53,6 +59,48 @@ class GeminiProvider extends ChangeNotifier {
       dataPart: dataPart,
     );
 
+    print(response);
+
+
+  indicator_list = extractNumbers(response!);
+  print("Extracted Numbers: $indicator_list");
+
+    ordinalDataList = [
+    OrdinalData(
+      domain: 'A',
+      measure: int.parse(indicator_list![0]) ,
+      color: int.parse(indicator_list![0]) <= 25
+          ? Colors.red[200]
+          : int.parse(indicator_list![0]) <= 50
+              ? Colors.orangeAccent[200]
+              : int.parse(indicator_list![0]) <= 80
+              ? Colors.blue[200]
+              : Colors.green[200],
+    ),
+    OrdinalData(
+      domain: 'B',
+      measure: int.parse(indicator_list![1]),
+      color: int.parse(indicator_list![1]) <= 25
+          ? Colors.red[200]
+          : int.parse(indicator_list![1]) <= 50
+              ? Colors.orangeAccent[200]
+              : int.parse(indicator_list![1]) <= 80
+              ? Colors.blue[200]
+              : Colors.green[200],
+    ),
+    OrdinalData(
+      domain: 'C',
+      measure: int.parse(indicator_list![2]),
+      color: int.parse(indicator_list![2]) <= 25
+          ? Colors.red[200]
+          : int.parse(indicator_list![2]) <= 50
+              ? Colors.orangeAccent[200]
+              : int.parse(indicator_list![2]) <= 80
+              ? Colors.blue[200]
+              : Colors.green[200],
+    ),
+  ];
+
     isLoading = false;
     notifyListeners();
   }
@@ -62,4 +110,10 @@ class GeminiProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+}
+
+List<String> extractNumbers(String text) {
+  RegExp regExp = RegExp(r'\b\d+\b'); // Matches one or more digits as a whole word
+  Iterable<Match> matches = regExp.allMatches(text);
+  return matches.map((match) => match.group(0)!).toList();
 }

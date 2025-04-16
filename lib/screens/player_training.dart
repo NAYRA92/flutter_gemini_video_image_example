@@ -1,4 +1,4 @@
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/providers/gemini_provider.dart';
@@ -25,15 +25,10 @@ String buttonsText = "";
 
 class _PlayerTrainingState extends State<PlayerTraining> {
   late VideoPlayerController _controller;
-  late AudioPlayer player = AudioPlayer();
 // late Future<void> _initializeVideoPlayerFuture;
   @override
   void initState() {
     super.initState();
-    // Create the audio player.
-    player = AudioPlayer();
-    // Set the release mode to keep the source after playback has completed.
-    player.setReleaseMode(ReleaseMode.stop);
     // Start the player as soon as the app is displayed.
     // player.setSource(AssetSource('palming.mp3'));
 
@@ -64,7 +59,6 @@ class _PlayerTrainingState extends State<PlayerTraining> {
   void dispose() {
     // Ensure disposing of the VideoPlayerController to free up resources.
     _controller.dispose();
-    player.dispose();
     super.dispose();
   }
 
