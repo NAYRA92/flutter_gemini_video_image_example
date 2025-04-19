@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
         useMaterial3: true,
       ),
-        title: 'PHOENIX GOAL ⚽️',
+        title: '⚽️ PHOENIX GOAL ⚽️',
         home: LogoPage(),
       ),
     );

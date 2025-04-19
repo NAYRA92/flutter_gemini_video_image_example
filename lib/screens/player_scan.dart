@@ -87,7 +87,7 @@ class _TextFromImageState extends State<TextFromImage> {
                   const Text('PHOENIX GOAL'),
                   Text(
                     'تحليل أداء اللاعبين باستخدام الذكاء الاصطناعي',
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12, ),
                   ),
                 ],
               ),
@@ -122,7 +122,7 @@ class _TextFromImageState extends State<TextFromImage> {
                                       Text(
                                           "إضغط لرفع الفيديو بطريقة التحليل التي تناسبك",
                                           style: TextStyle(
-                                              color: mainColor,
+                                              color: Colors.white,
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500)),
                                       SizedBox(
@@ -481,7 +481,7 @@ class _TextFromImageState extends State<TextFromImage> {
                         geminiProvider.response = null;
                         promptText = "";
                         geminiProvider.isLoading = false;
-                        geminiProvider.ordinalDataList = null;
+                        // geminiProvider.ordinalDataList = null;
                       });
                     },
                     tooltip: "العودة للصفحة السابقة",

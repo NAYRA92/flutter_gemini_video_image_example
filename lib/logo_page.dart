@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gemini/screens/colours.dart';
 import 'package:flutter_gemini/screens/dashboard.dart';
 
+import 'screens/playerlist_page.dart';
+
 class LogoPage extends StatelessWidget {
   const LogoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3), (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen(title: 'PHOENIX GOAL ⚽️',)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => PlayerlistPage(title: 'PHOENIX GOAL ⚽️',)));
     });
     return Scaffold(
       backgroundColor: Colors.white,

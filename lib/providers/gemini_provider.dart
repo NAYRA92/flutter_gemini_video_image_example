@@ -24,7 +24,7 @@ List<int> indicatorList = [];
 
   String? response;
   List<String>? indicator_list;
-  List<OrdinalData>? ordinalDataList ;
+  List<OrdinalData> ordinalDataList = [] ;
   bool isLoading = false;
 
   Future<void> generateContentFromText({
@@ -47,7 +47,7 @@ List<int> indicatorList = [];
     notifyListeners();
     response = null;
     indicator_list = null;
-    ordinalDataList = null;
+    // ordinalDataList = null;
     final dataPart = DataPart(
       'video/',
       // 'image/jpeg',
@@ -65,41 +65,56 @@ List<int> indicatorList = [];
   indicator_list = extractNumbers(response!);
   print("Extracted Numbers: $indicator_list");
 
-    ordinalDataList = [
+  for(int i = 0; i < indicator_list!.length; i++){
+   ordinalDataList.add(
     OrdinalData(
-      domain: 'A',
-      measure: int.parse(indicator_list![0]) ,
-      color: int.parse(indicator_list![0]) <= 25
+      domain: 'Item $i',
+      measure: int.parse(indicator_list![i]) ,
+      color: int.parse(indicator_list![i]) <= 25
           ? Colors.red[200]
-          : int.parse(indicator_list![0]) <= 50
+          : int.parse(indicator_list![i]) <= 50
               ? Colors.orangeAccent[200]
-              : int.parse(indicator_list![0]) <= 80
+              : int.parse(indicator_list![i]) <= 80
               ? Colors.blue[200]
               : Colors.green[200],
-    ),
-    OrdinalData(
-      domain: 'B',
-      measure: int.parse(indicator_list![1]),
-      color: int.parse(indicator_list![1]) <= 25
-          ? Colors.red[200]
-          : int.parse(indicator_list![1]) <= 50
-              ? Colors.orangeAccent[200]
-              : int.parse(indicator_list![1]) <= 80
-              ? Colors.blue[200]
-              : Colors.green[200],
-    ),
-    OrdinalData(
-      domain: 'C',
-      measure: int.parse(indicator_list![2]),
-      color: int.parse(indicator_list![2]) <= 25
-          ? Colors.red[200]
-          : int.parse(indicator_list![2]) <= 50
-              ? Colors.orangeAccent[200]
-              : int.parse(indicator_list![2]) <= 80
-              ? Colors.blue[200]
-              : Colors.green[200],
-    ),
-  ];
+    ),);
+  }
+
+  //   ordinalDataList = [
+  //   OrdinalData(
+  //     domain: 'A',
+  //     measure: int.parse(indicator_list![0]) ,
+  //     color: int.parse(indicator_list![0]) <= 25
+  //         ? Colors.red[200]
+  //         : int.parse(indicator_list![0]) <= 50
+  //             ? Colors.orangeAccent[200]
+  //             : int.parse(indicator_list![0]) <= 80
+  //             ? Colors.blue[200]
+  //             : Colors.green[200],
+  //   ),
+  //   OrdinalData(
+  //     domain: 'B',
+  //     measure: int.parse(indicator_list![1]),
+  //     color: int.parse(indicator_list![1]) <= 25
+  //         ? Colors.red[200]
+  //         : int.parse(indicator_list![1]) <= 50
+  //             ? Colors.orangeAccent[200]
+  //             : int.parse(indicator_list![1]) <= 80
+  //             ? Colors.blue[200]
+  //             : Colors.green[200],
+  //   ),
+  //   OrdinalData(
+  //     domain: 'C',
+  //     measure: int.parse(indicator_list![2]),
+  //     color: int.parse(indicator_list![2]) <= 25
+  //         ? Colors.red[200]
+  //         : int.parse(indicator_list![2]) <= 50
+  //             ? Colors.orangeAccent[200]
+  //             : int.parse(indicator_list![2]) <= 80
+  //             ? Colors.blue[200]
+  //             : Colors.green[200],
+  //   ),
+  // ];
 
     isLoading = false;
     notifyListeners();

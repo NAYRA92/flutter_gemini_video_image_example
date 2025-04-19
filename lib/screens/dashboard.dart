@@ -113,15 +113,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: ListView.separated(
                     itemCount: 3,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        tileColor: yellowColor,
-                        title: Text("Player 1 Name",
-                        style: TextStyle(
-                                  color: mainColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400)),
-                        trailing: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.view_agenda)),
+                      return Card(
+                        color: yellowColor,
+                        child: ListTile(
+                          title: Text("Player 1 Name",
+                          style: TextStyle(
+                                    color: mainColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400)),
+                          trailing: IconButton(
+                              onPressed: () {}, icon: Icon(Icons.view_agenda)),
+                        ),
                       );
                     },
                     separatorBuilder: (context, index) {
