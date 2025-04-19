@@ -147,7 +147,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const TextFromImage(),
+                        builder: (context) => TextFromImage(
+                          playerName: "",
+                        ),
                       ),
                     );
                   },

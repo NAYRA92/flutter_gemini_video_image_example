@@ -14,7 +14,8 @@ import 'package:video_player/video_player.dart';
 //https://www.freepik.com/
 
 class TextFromImage extends StatefulWidget {
-  const TextFromImage({super.key});
+  final String playerName;
+  const TextFromImage({super.key, required this.playerName});
 
   static final _textController = TextEditingController();
 
@@ -86,8 +87,10 @@ class _TextFromImageState extends State<TextFromImage> {
                 children: [
                   const Text('PHOENIX GOAL'),
                   Text(
-                    'تحليل أداء اللاعبين باستخدام الذكاء الاصطناعي',
-                    style: TextStyle(fontSize: 12, ),
+                    'تحليل أداء اللاعب ${widget.playerName} باستخدام الذكاء الاصطناعي',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
@@ -116,6 +119,18 @@ class _TextFromImageState extends State<TextFromImage> {
                             mediaProvider.bytes == null
                                 ? Column(
                                     children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: mainColor,
+                                            padding: EdgeInsets.all(15)),
+                                        onPressed: () {},
+                                        child: Text(
+                                            "اضعط لعرض التحليلات السابقة للاعب ${widget.playerName}",
+                                            style: TextStyle(
+                                                color: mainColor,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600)),
+                                      ),
                                       SizedBox(
                                         height: 60,
                                       ),
@@ -145,8 +160,8 @@ class _TextFromImageState extends State<TextFromImage> {
                                                 قم بإضافة ايموجي في ردك.
                                                 إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
                                                 ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 
-                                                لا تكتب لي مجموع التقييم
+                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك
+                                           
                                                 مع كتابة نقاط القوة ونقاط الضعف للاعب
                                                     """;
                                               buttonsText =
@@ -182,8 +197,8 @@ class _TextFromImageState extends State<TextFromImage> {
                                                       قم بإضافة ايموجي في ردك.
                                                       إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
                                                 ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 
-                                                لا تكتب لي مجموع التقييم
+                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك 
+                                           
                                                       مع كتابة نقاط القوة ونقاط الضعف للاعب
                                                           """;
                                               buttonsText =
@@ -219,8 +234,8 @@ class _TextFromImageState extends State<TextFromImage> {
                                                       قم بإضافة ايموجي في ردك.
                                                       إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
                                                 ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 
-                                                لا تكتب لي مجموع التقييم
+                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك 
+                                               
                                                       مع كتابة نقاط القوة ونقاط الضعف للاعب
                                                           """;
                                               buttonsText =
@@ -257,8 +272,8 @@ class _TextFromImageState extends State<TextFromImage> {
                                                       قم بإضافة ايموجي في ردك.
                                                       إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
                                                 ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 
-                                                لا تكتب لي مجموع التقييم
+                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك 
+                                                
                                                       مع كتابة نقاط القوة ونقاط الضعف للاعب
                                                           """;
                                               buttonsText =
@@ -331,62 +346,55 @@ class _TextFromImageState extends State<TextFromImage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              1,
-                                          height: 250,
-                                          child:
-                                              geminiProvider.indicator_list ==
-                                                      null || geminiProvider.ordinalDataList == null
-                                                  ? SizedBox()
-                                                  : ListView.builder(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      itemCount: geminiProvider
-                                                          .indicator_list!
-                                                          .length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return AspectRatio(
-                                                          aspectRatio: 16 / 9,
-                                                          child: DChartPieO(
-                                                            data: geminiProvider.ordinalDataList!,
-                                                            customLabel:
-                                                                (ordinalData,
-                                                                    index) {
-                                                              return '${ordinalData.measure}%';
-                                                            },
-                                                            configRenderPie:
-                                                                ConfigRenderPie(
-                                                              strokeWidthPx: 2,
-                                                              arcLabelDecorator:
-                                                                  ArcLabelDecorator(),
-                                                            ),
-                                                          ),
-                                                        );
-
-                                                        // CircularPercentIndicator(
-                                                        //     radius: 60.0,
-                                                        //     lineWidth: 5.0,
-                                                        //     percent: 1.0,
-                                                        //     center: Text(
-                                                        //         "${geminiProvider.indicator_list![index]}%"),
-                                                        //     progressColor: int.parse(
-                                                        //                 geminiProvider.indicator_list![
-                                                        //                     index]) <=
-                                                        //             30
-                                                        //         ? Colors.red
-                                                        //         : (int.parse(geminiProvider.indicator_list![
-                                                        //                     index]) <=
-                                                        //                 60
-                                                        //             ? Colors
-                                                        //                 .orange
-                                                        //             : Colors
-                                                        //                 .green));
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1,
+                                            height: 250,
+                                            child: geminiProvider
+                                                            .indicator_list ==
+                                                        null ||
+                                                    geminiProvider
+                                                        .ordinalDataList.isEmpty
+                                                ? SizedBox()
+                                                : AspectRatio(
+                                                    aspectRatio: 16 / 9,
+                                                    child: DChartPieO(
+                                                      data: geminiProvider
+                                                          .ordinalDataList,
+                                                      customLabel:
+                                                          (ordinalData, index) {
+                                                        return '${ordinalData.measure}%';
                                                       },
+                                                      configRenderPie:
+                                                          ConfigRenderPie(
+                                                        strokeWidthPx: 2,
+                                                        arcLabelDecorator:
+                                                            ArcLabelDecorator(),
+                                                      ),
                                                     ),
-                                        ),
+                                                  )
+
+                                            // CircularPercentIndicator(
+                                            //     radius: 60.0,
+                                            //     lineWidth: 5.0,
+                                            //     percent: 1.0,
+                                            //     center: Text(
+                                            //         "${geminiProvider.indicator_list![index]}%"),
+                                            //     progressColor: int.parse(
+                                            //                 geminiProvider.indicator_list![
+                                            //                     index]) <=
+                                            //             30
+                                            //         ? Colors.red
+                                            //         : (int.parse(geminiProvider.indicator_list![
+                                            //                     index]) <=
+                                            //                 60
+                                            //             ? Colors
+                                            //                 .orange
+                                            //             : Colors
+                                            //                 .green));
+
+                                            ),
                                         SizedBox(
                                           height: 10,
                                         ),

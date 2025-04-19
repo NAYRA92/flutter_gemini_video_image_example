@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/screens/player_scan.dart';
 import 'package:flutter_gemini/screens/text_from_text.dart';
+import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:d_chart/d_chart.dart';
 import 'colours.dart';
@@ -120,7 +121,7 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                                                 "رقم اللاعب", "رقم اللاعب"),
                                             addPlayerContainer(
                                                 playerPositionCont,
-                                                "دفاع - هجوم او وسط",
+                                                "حارس مرمى - دفاع - هجوم او وسط",
                                                 "موقع اللاعب"),
                                           ],
                                         ),
@@ -128,13 +129,14 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                                       actions: [
                                         ElevatedButton(
                                             onPressed: () {
-                                              // FirebaseFirestore.instance
-                                              // .collection("players")
-                                              // .add({
-                                              //   "name": "name",
-                                              //   "number": "11",
-                                              //   "position": "Front",
-                                              // });
+                                              FirebaseFirestore.instance
+                                                  .collection("players")
+                                                  .add({
+                                                "name": playerNameCont.text,
+                                                "number": playerNumberont.text,
+                                                "position":
+                                                    playerPositionCont.text,
+                                              });
                                               playerNameCont.clear();
                                               playerNumberont.clear();
                                               playerPositionCont.clear();
@@ -180,51 +182,84 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                   height: 20,
                 ),
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        color: yellowColor,
-                        child: ListTile(
-                          title: Text("Player 1 Name - No.11",
-                              style: TextStyle(
-                                  color: mainColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600)),
-                          subtitle: Text("Player 1 position",
-                              style: TextStyle(
-                                  color: mainColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400)),
-                          trailing: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const TextFromImage(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(Icons.open_in_new)),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const TextFromImage(),
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("players")
+                          .snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          //this code will show a circular progress indicator on Flutter app screen
+                          return SizedBox(
+                            height: 50,
+                            child: SizedBox(
+                                    height: 150,
+                                    width: 150,
+                                    child: Lottie.asset(
+                                        "assets/images/football_loading.json"),
+                                  ));
+                        }
+
+                        //get data snapshot (document) from your collection
+                        final playerdata = snapshot.data?.docs;
+
+                        if (playerdata!.isEmpty) {
+                          //if there is no documents found in your collection
+                          return const Text("لا توجد بيانات");
+                        }
+                        return ListView.separated(
+                          itemCount: playerdata.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              color: yellowColor,
+                              child: ListTile(
+                                title: Text(
+                                    "${playerdata[index]["name"]}- No.${playerdata[index]["number"]}",
+                                    style: TextStyle(
+                                        color: mainColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600)),
+                                subtitle: Text(playerdata[index]["position"],
+                                    style: TextStyle(
+                                        color: mainColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400)),
+                                trailing: IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                             TextFromImage(
+                                                playerName: playerdata[index]["name"],
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.open_in_new)),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                         TextFromImage(
+                                          playerName: playerdata[index]["name"],
+                                         ),
+                                    ),
+                                  );
+                                },
                               ),
                             );
                           },
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return Divider(
-                        thickness: 1,
-                        color: mainColor,
-                        indent: 20,
-                        endIndent: 20,
-                      );
-                    },
-                  ),
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              thickness: 1,
+                              color: mainColor,
+                              indent: 20,
+                              endIndent: 20,
+                            );
+                          },
+                        );
+                      }),
                 ),
                 const SizedBox(height: 16),
                 Expanded(
