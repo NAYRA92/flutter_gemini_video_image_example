@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "343147209763",
+    "firebase_url": "https://mytestproject-202406.firebaseio.com",
+    "project_id": "mytestproject-202406",
+    "storage_bucket": "mytestproject-202406.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343147209763:android:db5bd76ccfc2bcee903d96",
+        "android_client_info": {
+          "package_name": "com.example.fire_base_vscode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30CkY6t87r9U8m0x5-2sXFQah7XCVvq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343147209763:android:4647f4fc6ed557de903d96",
+        "android_client_info": {
+          "package_name": "com.starcodedev.lamasathadhramia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30CkY6t87r9U8m0x5-2sXFQah7XCVvq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343147209763:android:0ea63fe555067acf903d96",
+        "android_client_info": {
+          "package_name": "com.starcodedev.lamasathadhramia_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30CkY6t87r9U8m0x5-2sXFQah7XCVvq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343147209763:android:6558fd9b38b5ba7f903d96",
+        "android_client_info": {
+          "package_name": "com.starcodedev.mojitteam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30CkY6t87r9U8m0x5-2sXFQah7XCVvq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343147209763:android:e4e7980810cb9e70903d96",
+        "android_client_info": {
+          "package_name": "com.starcodedev.phoenix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30CkY6t87r9U8m0x5-2sXFQah7XCVvq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
