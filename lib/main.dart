@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
         title: '⚽️ PHOENIX GOAL ⚽️',
-        home: PlayerHistory(),
+        home: LogoPage(),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gemini/providers/gemini_provider.dart';
 import 'package:flutter_gemini/providers/media_provider.dart';
 import 'package:flutter_gemini/screens/colours.dart';
+import 'package:flutter_gemini/screens/player_history.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -112,13 +113,18 @@ class _TextFromImageState extends State<TextFromImage> {
                                     children: [
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                            backgroundColor: mainColor,
+                                            backgroundColor: purpleColor,
                                             padding: EdgeInsets.all(15)),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => PlayerHistory(
+                                            playerName: widget.playerName, 
+                                            playerID: widget.playerID)));
+                                        },
                                         child: Text(
                                             "اضعط لعرض التحليلات السابقة للاعب ${widget.playerName}",
                                             style: TextStyle(
-                                                color: yellowColor,
+                                                color: Colors.white,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w600)),
                                       ),
@@ -152,8 +158,6 @@ class _TextFromImageState extends State<TextFromImage> {
                                               buttonsText =
                                                   "تحليل أداء اللاعب بشكل عام";
                                             });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
                                           },
                                           icon: Text("أداء اللاعب بشكل عام",
                                               style: TextStyle(
@@ -182,8 +186,6 @@ class _TextFromImageState extends State<TextFromImage> {
                                               buttonsText =
                                                   "اداء اللاعب من حيث السرعة والانطلاقة";
                                             });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
                                           },
                                           icon: Text(
                                               "اداء اللاعب من حيث السرعة والانطلاقة",
@@ -213,8 +215,6 @@ class _TextFromImageState extends State<TextFromImage> {
                                               buttonsText =
                                                   "اداء اللاعب من حيث دقة التمرير";
                                             });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
                                           },
                                           icon: Text(
                                               "اداء اللاعب من حيث دقة التمرير",
@@ -245,8 +245,6 @@ class _TextFromImageState extends State<TextFromImage> {
                                               buttonsText =
                                                   "اداء اللاعب من حيث اتخاذ القرار";
                                             });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
                                           },
                                           icon: Text(
                                               "اداء اللاعب من حيث اتخاذ القرار",

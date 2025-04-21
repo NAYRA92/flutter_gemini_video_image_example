@@ -182,6 +182,7 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                   height: 20,
                 ),
                 Expanded(
+                  flex: 2,
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection("players")
@@ -309,6 +310,11 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
             ),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: mainColor,
+          onPressed: (){},
+          child: Icon(Icons.sports_soccer, color: yellowColor,),
+          ),
       ),
     );
   }
