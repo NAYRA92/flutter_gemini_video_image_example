@@ -1,4 +1,5 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_chart/commons/data_model/data_model.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,9 @@ import 'package:video_player/video_player.dart';
 
 class TextFromImage extends StatefulWidget {
   final String playerName;
-  const TextFromImage({super.key, required this.playerName});
-
-  static final _textController = TextEditingController();
+  final String playerID;
+  const TextFromImage(
+      {super.key, required this.playerName, required this.playerID});
 
   @override
   State<TextFromImage> createState() => _TextFromImageState();
@@ -29,40 +30,20 @@ String buttonsText = "";
 class _TextFromImageState extends State<TextFromImage> {
   late VideoPlayerController _controller;
 
-// late Future<void> _initializeVideoPlayerFuture;
   @override
   void initState() {
     super.initState();
-
-    // Start the player as soon as the app is displayed.
-    // player.setSource(AssetSource('palming.mp3'));
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   await player.setSource(AssetSource('palming-football-34928.mp3'));
-    //   await player.resume();
-    // });
-
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
       ),
     );
 
-    // _initializeVideoPlayerFuture = _controller.initialize();
-    // Ensure disposing of the VideoPlayerController to free up resources.
     _controller.dispose();
-
-    // _controller = VideoPlayerController.networkUrl(Uri.parse(
-    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
-    //   ..initialize().then((_) {
-    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-    //     setState(() {});
-    //   });
   }
 
   @override
   void dispose() {
-    // Ensure disposing of the VideoPlayerController to free up resources.
     _controller.dispose();
     super.dispose();
   }
@@ -71,6 +52,16 @@ class _TextFromImageState extends State<TextFromImage> {
   Widget build(BuildContext context) {
     final geminiProvider = Provider.of<GeminiProvider>(context);
     final mediaProvider = Provider.of<MediaProvider>(context);
+
+    String systemPrompt = """
+  انت تكتب اسم اللاعب ${widget.playerName} في بداية الرد
+  لا تقم باستخدام الرمز ** في الرد،
+  قم بإضافة ايموجي في ردك.
+  إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
+  ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
+  اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك
+  مع كتابة نقاط القوة ونقاط الضعف للاعب
+""";
 
     return PopScope(
       onPopInvokedWithResult: (val, res) async {
@@ -127,7 +118,7 @@ class _TextFromImageState extends State<TextFromImage> {
                                         child: Text(
                                             "اضعط لعرض التحليلات السابقة للاعب ${widget.playerName}",
                                             style: TextStyle(
-                                                color: mainColor,
+                                                color: yellowColor,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w600)),
                                       ),
@@ -156,13 +147,7 @@ class _TextFromImageState extends State<TextFromImage> {
                                             setState(() {
                                               promptText = """
                                             اريد تحليل اداء اللاعب في الفيديو المرفق وهل هو لاعب مبتدئ، ممتاز، ام محترف؟،
-                                             لا تقم باستخدام الرمز ** في الرد،
-                                                قم بإضافة ايموجي في ردك.
-                                                إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
-                                                ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك
-                                           
-                                                مع كتابة نقاط القوة ونقاط الضعف للاعب
+                                           $systemPrompt
                                                     """;
                                               buttonsText =
                                                   "تحليل أداء اللاعب بشكل عام";
@@ -170,8 +155,7 @@ class _TextFromImageState extends State<TextFromImage> {
                                             // _controller =
                                             // VideoPlayerController.file(mediaProvider.bytes);
                                           },
-                                          icon: Text(
-                                              "تحليل أداء اللاعب بشكل عام",
+                                          icon: Text("أداء اللاعب بشكل عام",
                                               style: TextStyle(
                                                   color: yellowColor,
                                                   fontSize: 18,
@@ -193,13 +177,7 @@ class _TextFromImageState extends State<TextFromImage> {
                                             mediaProvider.setImage();
                                             setState(() {
                                               promptText = """
-                                                      حلل لي أداء اللاعب من حيث السرعة والإنطلاقة، لا تقم باستخدام الرمز * في الرد،
-                                                      قم بإضافة ايموجي في ردك.
-                                                      إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
-                                                ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك 
-                                           
-                                                      مع كتابة نقاط القوة ونقاط الضعف للاعب
+                                                      حلل لي أداء اللاعب من حيث السرعة والإنطلاقة، $systemPrompt
                                                           """;
                                               buttonsText =
                                                   "اداء اللاعب من حيث السرعة والانطلاقة";
@@ -230,13 +208,7 @@ class _TextFromImageState extends State<TextFromImage> {
                                             mediaProvider.setImage();
                                             setState(() {
                                               promptText = """
-                                                      حلل لي أداء اللاعب من حيث دقة التمرير، لا تقم باستخدام الرمز * في الرد،
-                                                      قم بإضافة ايموجي في ردك.
-                                                      إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
-                                                ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك 
-                                               
-                                                      مع كتابة نقاط القوة ونقاط الضعف للاعب
+                                                      حلل لي أداء اللاعب من حيث دقة التمرير، $systemPrompt
                                                           """;
                                               buttonsText =
                                                   "اداء اللاعب من حيث دقة التمرير";
@@ -268,13 +240,7 @@ class _TextFromImageState extends State<TextFromImage> {
                                             setState(() {
                                               promptText = """
                                                       حلل لي أداء اللاعب من حيث اتخاذ القرار، هل يمرر، يسدد أو يراوغ بشكل صحيح؟
-                                                      لا تقم باستخدام الرمز * في الرد،
-                                                      قم بإضافة ايموجي في ردك.
-                                                      إن تم اضافة فيديوهات لاتحتوي على لاعبين كرة قدم، انت ترفض تحليلها.
-                                                ممتاز .. اريد النتائج ك نسب مئوية تكمل الرقم 100
-                                                اريد لهذه النسب ان تكمل العدد 100 لكن لا تكتب الرقم 100 في اجابتك 
-                                                
-                                                      مع كتابة نقاط القوة ونقاط الضعف للاعب
+                                                      $systemPrompt
                                                           """;
                                               buttonsText =
                                                   "اداء اللاعب من حيث اتخاذ القرار";
@@ -313,12 +279,20 @@ class _TextFromImageState extends State<TextFromImage> {
                             const SizedBox(height: 16),
                             if (mediaProvider.bytes != null)
                               ElevatedButton(
-                                onPressed: () {
-                                  geminiProvider.generateContentFromImage(
+                                onPressed: () async {
+                                  await geminiProvider.generateContentFromImage(
                                     // prompt: TextFromImage._textController.text,
                                     prompt: promptText,
                                     bytes: mediaProvider.bytes!,
                                   );
+                                  FirebaseFirestore.instance
+                                      .collection("players")
+                                      .doc(widget.playerID)
+                                      .collection("player_data")
+                                      .add({
+                                    "analyis_type": buttonsText,
+                                    "analyis_data": geminiProvider.response,
+                                  });
                                 },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: mainColor,
@@ -346,55 +320,35 @@ class _TextFromImageState extends State<TextFromImage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1,
-                                            height: 250,
-                                            child: geminiProvider
-                                                            .indicator_list ==
-                                                        null ||
-                                                    geminiProvider
-                                                        .ordinalDataList.isEmpty
-                                                ? SizedBox()
-                                                : AspectRatio(
-                                                    aspectRatio: 16 / 9,
-                                                    child: DChartPieO(
-                                                      data: geminiProvider
-                                                          .ordinalDataList,
-                                                      customLabel:
-                                                          (ordinalData, index) {
-                                                        return '${ordinalData.measure}%';
-                                                      },
-                                                      configRenderPie:
-                                                          ConfigRenderPie(
-                                                        strokeWidthPx: 2,
-                                                        arcLabelDecorator:
-                                                            ArcLabelDecorator(),
-                                                      ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1,
+                                          height: 250,
+                                          child: geminiProvider
+                                                          .indicator_list ==
+                                                      null ||
+                                                  geminiProvider
+                                                      .ordinalDataList.isEmpty
+                                              ? SizedBox()
+                                              : AspectRatio(
+                                                  aspectRatio: 16 / 9,
+                                                  child: DChartPieO(
+                                                    data: geminiProvider
+                                                        .ordinalDataList,
+                                                    customLabel:
+                                                        (ordinalData, index) {
+                                                      return '${ordinalData.measure}%';
+                                                    },
+                                                    configRenderPie:
+                                                        ConfigRenderPie(
+                                                      strokeWidthPx: 2,
+                                                      arcLabelDecorator:
+                                                          ArcLabelDecorator(),
                                                     ),
-                                                  )
-
-                                            // CircularPercentIndicator(
-                                            //     radius: 60.0,
-                                            //     lineWidth: 5.0,
-                                            //     percent: 1.0,
-                                            //     center: Text(
-                                            //         "${geminiProvider.indicator_list![index]}%"),
-                                            //     progressColor: int.parse(
-                                            //                 geminiProvider.indicator_list![
-                                            //                     index]) <=
-                                            //             30
-                                            //         ? Colors.red
-                                            //         : (int.parse(geminiProvider.indicator_list![
-                                            //                     index]) <=
-                                            //                 60
-                                            //             ? Colors
-                                            //                 .orange
-                                            //             : Colors
-                                            //                 .green));
-
-                                            ),
+                                                  ),
+                                                ),
+                                        ),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -489,7 +443,7 @@ class _TextFromImageState extends State<TextFromImage> {
                         geminiProvider.response = null;
                         promptText = "";
                         geminiProvider.isLoading = false;
-                        // geminiProvider.ordinalDataList = null;
+                        geminiProvider.ordinalDataList.clear();
                       });
                     },
                     tooltip: "العودة للصفحة السابقة",

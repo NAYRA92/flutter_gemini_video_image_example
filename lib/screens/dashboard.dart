@@ -149,6 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       MaterialPageRoute(
                         builder: (context) => TextFromImage(
                           playerName: "",
+                          playerID: "",
                         ),
                       ),
                     );

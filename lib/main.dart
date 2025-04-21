@@ -8,6 +8,7 @@ import 'package:flutter_gemini/screens/dashboard.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/colours.dart';
+import 'screens/player_history.dart';
 import 'screens/player_scan.dart';
 
 void main() async {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
         title: '⚽️ PHOENIX GOAL ⚽️',
-        home: LogoPage(),
+        home: PlayerHistory(),
       ),
     );
   }

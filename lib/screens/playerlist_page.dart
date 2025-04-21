@@ -192,13 +192,13 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                             ConnectionState.waiting) {
                           //this code will show a circular progress indicator on Flutter app screen
                           return SizedBox(
-                            height: 50,
-                            child: SizedBox(
-                                    height: 150,
-                                    width: 150,
-                                    child: Lottie.asset(
-                                        "assets/images/football_loading.json"),
-                                  ));
+                              height: 50,
+                              child: SizedBox(
+                                height: 150,
+                                width: 150,
+                                child: Lottie.asset(
+                                    "assets/images/football_loading.json"),
+                              ));
                         }
 
                         //get data snapshot (document) from your collection
@@ -229,21 +229,22 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                                     onPressed: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                             TextFromImage(
-                                                playerName: playerdata[index]["name"],
-                                              ),
+                                          builder: (context) => TextFromImage(
+                                            playerName: playerdata[index]
+                                                ["name"],
+                                            playerID: playerdata[index].id,
+                                          ),
                                         ),
                                       );
                                     },
-                                    icon: Icon(Icons.open_in_new)),
+                                    icon: Icon(Icons.sports_soccer)),
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                         TextFromImage(
-                                          playerName: playerdata[index]["name"],
-                                         ),
+                                      builder: (context) => TextFromImage(
+                                        playerName: playerdata[index]["name"],
+                                        playerID: playerdata[index].id,
+                                      ),
                                     ),
                                   );
                                 },
