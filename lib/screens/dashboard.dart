@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/screens/player_scan.dart';
-import 'package:flutter_gemini/screens/text_from_text.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:d_chart/d_chart.dart';
 import 'colours.dart';
 import 'player_training.dart';

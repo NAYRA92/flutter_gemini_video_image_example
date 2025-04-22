@@ -41,7 +41,6 @@ class ChatWidget extends StatefulWidget {
 
 class _ChatWidgetState extends State<ChatWidget> {
   late final GenerativeModel _model;
-  late final GenerativeModel _helloModel;
   late final ChatSession _chat;
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _textController = TextEditingController();
@@ -63,7 +62,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                         fontSize: 16,
                         fontWeight: FontWeight.w300,),
                       decoration: InputDecoration(
-                        hintText: "How can I help you?",
+                        hintText: "كيف اساعدك اليوم؟",
                         hintStyle: TextStyle(
                         color: yellowColor,
                         fontSize: 14,
@@ -84,7 +83,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                         ),
                       validator: (value) {
                          if (value == null || value.isEmpty) {
-                            return 'This field can\'t be empty';
+                            return "لا يمكن للحقل ان يكون فارغاً";
                           }
                         return null;
                   
@@ -123,6 +122,7 @@ class _ChatWidgetState extends State<ChatWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
+        textDirection: TextDirection.rtl,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -170,7 +170,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                         ClipboardData(text: contentToCopy));
                       // copied successfully
                       ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Copied to clopboard!'),));
+                      SnackBar(content: Text('تم النسخ بنجاح'),));
                       print(contentToCopy);
                     },
                     icon: Icon(
@@ -277,7 +277,7 @@ class _ChatWidgetState extends State<ChatWidget> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Something went wrong'),
+          title: const Text("هنالك خلل ما"),
           content: SingleChildScrollView(
             child: SelectableText(message),
           ),
@@ -286,7 +286,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: const Text('تم'),
             )
           ],
         );

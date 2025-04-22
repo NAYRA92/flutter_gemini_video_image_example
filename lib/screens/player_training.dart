@@ -8,6 +8,8 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
+import '../chatbot_page.dart';
+
 //https://pixabay.com/sound-effects/search/football/
 //https://www.freepik.com/
 
@@ -380,19 +382,55 @@ class _PlayerTrainingState extends State<PlayerTraining> {
               ],
             ),
             floatingActionButton: isPressed
-                ? FloatingActionButton(
-                    backgroundColor: mainColor,
-                    onPressed: () {
-                      setState(() {
-                        isPressed = false;
-                      });
-                    },
-                    tooltip: "العودة للصفحة السابقة",
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: yellowColor,
+                ? Row(
+                  children: [
+                    FloatingActionButton(
+                        backgroundColor: mainColor,
+                        onPressed: () {
+                          setState(() {
+                            isPressed = false;
+                          });
+                        },
+                        tooltip: "العودة للصفحة السابقة",
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: yellowColor,
+                        ),
+                      ),
+                FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext) {
+                return AlertDialog(
+                  content: Container(
+                    height: 350,
+                    width: 350,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ChatScreen(),
+                        ),
+                      ],
                     ),
-                  )
+                  ),
+                );
+              });
+        },
+        tooltip: "أنا هنا لمساعدتك",
+        backgroundColor: mainColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.assistant,
+              color: yellowColor,
+            ),
+          ],
+        ),
+      ),
+                  ],
+                )
                 : Container()),
       ),
     );

@@ -1,28 +1,7 @@
 // import 'package:animated_introduction/animated_introduction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/screens/colours.dart';
-
 import 'screens/playerlist_page.dart';
-
-// final List<SingleIntroScreen> pages = [
-//   const SingleIntroScreen(
-//     title: 'Welcome to the Event Management App !',
-//     description:
-//         'You plans your Events, We\'ll do the rest and will be the best! Guaranteed!  ',
-//     imageAsset: 'assets/images/purple_bg.jpeg',
-//   ),
-//   const SingleIntroScreen(
-//     title: 'Book tickets to cricket matches and events',
-//     description:
-//         'Tickets to the latest movies, crickets matches, concerts, comedy shows, plus lots more !',
-//     imageAsset: 'assets/images/yellow_bg.jpeg',
-//   ),
-//   const SingleIntroScreen(
-//     title: 'Grabs all events now only in your hands',
-//     description: 'All events are now in your hands, just a click away ! ',
-//     imageAsset: 'assets/images/green_bg.jpeg',
-//   ),
-// ];
 
 class IntroPager extends StatefulWidget {
   @override
@@ -57,8 +36,8 @@ class _IntroPagerState extends State<IntroPager> {
                     Colors.yellow,
                     'purple_bg'),
                 _buildPage(
-                    'مساعد مخصص لك',
-                    'يقدم لك اقتراحات لتدريبات اللاعبين، كما تستطيع سؤاله بنفسك!',
+                    'مدرب مخصص لك',
+                    'يقدم لك اقتراحات لتدريبات مختلف أنواع اللاعبين!',
                     Colors.purple,
                     'yellow_bg'),
                 _buildPage('احدث الملاعب بين يديك', 

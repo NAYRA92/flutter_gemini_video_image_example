@@ -1,17 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gemini/logo_page.dart';
 import 'package:flutter_gemini/providers/gemini_provider.dart';
 import 'package:flutter_gemini/providers/media_provider.dart';
-import 'package:flutter_gemini/screens/dashboard.dart';
-import 'package:flutter_gemini/studium_page.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/colours.dart';
-import 'screens/player_history.dart';
-import 'screens/player_scan.dart';
-import 'screens/playerlist_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

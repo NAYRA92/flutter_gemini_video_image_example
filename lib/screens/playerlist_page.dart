@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/screens/player_scan.dart';
-import 'package:flutter_gemini/screens/text_from_text.dart';
+import 'package:flutter_gemini/studium_page.dart';
 import 'package:lottie/lottie.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:d_chart/d_chart.dart';
 import '../chatbot_page.dart';
 import 'colours.dart';
@@ -303,7 +301,46 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                             )),
                       ),
                       Text(
-                          "يوفر لك الذكاء الاصطناعي قائمة مختلفة بتدريبات اللاعبين")
+                          "يوفر لك الذكاء الاصطناعي قائمة مختلفة بتدريبات اللاعبين"),
+
+                     //stadium buttons
+                     SizedBox(height: 20,),
+                     Padding(
+                        padding: const EdgeInsets.only(
+                            top: 5, left: 40, right: 40, bottom: 20),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: mainColor,
+                                padding: EdgeInsets.all(15)),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const StudiumPage(),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('ملاعب كرةالقدم',
+                                    style: TextStyle(
+                                        color: yellowColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600)),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Icon(
+                                  Icons.place,
+                                  color: yellowColor,
+                                  size: 24,
+                                ),
+                              ],
+                            )),
+                      ),
+                      Text(
+                          "نقدم لك قائمة لملاعب كرة القدم في المملكة"),
+
                     ],
                   ),
                 ),
@@ -311,38 +348,38 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
             ),
           ),
         ),
-          floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext) {
-                return AlertDialog(
-                  content: Container(
-                    height: 350,
-                    width: 350,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ChatScreen(),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-        },
-        tooltip: "أنا هنا لمساعدتك",
-        backgroundColor: mainColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.assistant,
-              color: yellowColor,
-            ),
-          ],
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     showDialog(
+      //         context: context,
+      //         builder: (BuildContext) {
+      //           return AlertDialog(
+      //             content: Container(
+      //               height: 350,
+      //               width: 350,
+      //               child: Column(
+      //                 children: [
+      //                   Expanded(
+      //                     child: ChatScreen(),
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           );
+      //         });
+      //   },
+      //   tooltip: "أنا هنا لمساعدتك",
+      //   backgroundColor: mainColor,
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Icon(
+      //         Icons.assistant,
+      //         color: yellowColor,
+      //       ),
+      //     ],
+      //   ),
+      // ),
       ),
     );
   }
