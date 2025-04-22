@@ -31,27 +31,26 @@ class _PlayerHistoryState extends State<PlayerHistory> {
   List<OrdinalData> createPieGraph(String response) {
     indicatorList = extractNumbers(response);
     print("Extracted Numbers: $indicatorList");
-    try{
+    try {
       for (int i = 0; i < indicatorList.length; i++) {
-      ordinalDataList.add(
-        OrdinalData(
-          domain: 'Item $i',
-          measure: int.parse(indicatorList[i]),
-          color: int.parse(indicatorList[i]) <= 25
-              ? Colors.red[200]
-              : int.parse(indicatorList[i]) <= 50
-                  ? Colors.orangeAccent[200]
-                  : int.parse(indicatorList[i]) <= 80
-                      ? Colors.blue[200]
-                      : Colors.green[200],
-        ),
-      );
-    }
-    return ordinalDataList;
-    }
-    catch(e){
-    print("Error Message: $e");
-    return ordinalDataList;
+        ordinalDataList.add(
+          OrdinalData(
+            domain: 'Item $i',
+            measure: int.parse(indicatorList[i]),
+            color: int.parse(indicatorList[i]) <= 25
+                ? Colors.red[200]
+                : int.parse(indicatorList[i]) <= 50
+                    ? Colors.orangeAccent[200]
+                    : int.parse(indicatorList[i]) <= 80
+                        ? Colors.blue[200]
+                        : Colors.green[200],
+          ),
+        );
+      }
+      return ordinalDataList;
+    } catch (e) {
+      print("Error Message: $e");
+      return ordinalDataList;
     }
   }
 
@@ -70,7 +69,8 @@ class _PlayerHistoryState extends State<PlayerHistory> {
               stream: FirebaseFirestore.instance
                   .collection("players")
                   .doc(widget.playerID)
-                  .collection("player_data").orderBy("timestamp", descending: true)
+                  .collection("player_data")
+                  .orderBy("timestamp", descending: true)
                   .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -80,7 +80,8 @@ class _PlayerHistoryState extends State<PlayerHistory> {
                         child: Lottie.asset(
                             "assets/images/football_loading.json")),
                   );
-                } if (snapshot.data!.docs.isEmpty) {
+                }
+                if (snapshot.data!.docs.isEmpty) {
                   return Center(child: Text("لا توجد بيانات سابقة بعد"));
                 }
                 return ListView.builder(

@@ -4,14 +4,13 @@ import 'package:flutter_gemini/screens/colours.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-
-
-String _apiKey = "AIzaSyCJJDVNUWUoX53GXIKbKYD7Jam6BwqBrWo"; //import your own api key instead of comaiCodeApi
+String _apiKey =
+    "AIzaSyCJJDVNUWUoX53GXIKbKYD7Jam6BwqBrWo"; //import your own api key instead of comaiCodeApi
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
-    super.key,});
-
+    super.key,
+  });
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -21,7 +20,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ChatWidget(apiKey: _apiKey,),
+      body: ChatWidget(
+        apiKey: _apiKey,
+      ),
     );
   }
 }
@@ -33,7 +34,6 @@ class ChatWidget extends StatefulWidget {
   });
 
   final String apiKey;
- 
 
   @override
   State<ChatWidget> createState() => _ChatWidgetState();
@@ -47,49 +47,49 @@ class _ChatWidgetState extends State<ChatWidget> {
   final FocusNode _textFieldFocus = FocusNode();
   final List<({Image? image, String? text, bool fromUser})> _generatedContent =
       <({Image? image, String? text, bool fromUser})>[];
-  final List<String> _generatedGreetingMessage = <String>[];
+  final List<String> userList = [];
   bool _loading = false;
   String contentToCopy = "";
 
   TextEditingController chatTextCont = TextEditingController();
-  Widget inputTextField(){
+  Widget inputTextField() {
     return Container(
-      width: MediaQuery.sizeOf(context).width/.5,
+      width: MediaQuery.sizeOf(context).width / .5,
       child: TextFormField(
-                      controller: chatTextCont,
-                      style: TextStyle(
-                        color: yellowColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,),
-                      decoration: InputDecoration(
-                        hintText: "كيف اساعدك اليوم؟",
-                        hintStyle: TextStyle(
-                        color: yellowColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,),
-                        fillColor: purpleColor,
-                        filled: true,
-                        suffixIcon:  IconButton(
-                          onPressed: (){
-                            _sendChatMessage(chatTextCont.text);
-                          }, 
-                          icon: Icon(
-                            Icons.send,
-                            color: yellowColor,
-                          )),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25)
-                        ),
-                        ),
-                      validator: (value) {
-                         if (value == null || value.isEmpty) {
-                            return "لا يمكن للحقل ان يكون فارغاً";
-                          }
-                        return null;
-                  
-                      },
-                      enableInteractiveSelection: true,
-                    ),
+        controller: chatTextCont,
+        style: TextStyle(
+          color: yellowColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w300,
+        ),
+        decoration: InputDecoration(
+          hintText: "كيف اساعدك اليوم؟",
+          hintStyle: TextStyle(
+            color: yellowColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w300,
+          ),
+          fillColor: purpleColor,
+          filled: true,
+          suffixIcon: IconButton(
+              onPressed: () {
+                _sendChatMessage(chatTextCont.text);
+                chatTextCont.clear();
+              },
+              icon: Icon(
+                Icons.send,
+                color: yellowColor,
+              )),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "لا يمكن للحقل ان يكون فارغاً";
+          }
+          return null;
+        },
+        enableInteractiveSelection: true,
+      ),
     );
   }
 
@@ -118,59 +118,68 @@ class _ChatWidgetState extends State<ChatWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        textDirection: TextDirection.rtl,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          inputTextField(),
-          SizedBox(
-            height: 15,
-          ),
-          Expanded(
-            child: _apiKey.isNotEmpty
-                ? ListView.builder(
-                    controller: _scrollController,
-                    itemBuilder: (context, idx) {
-                      final content = _generatedContent[idx];
-                      contentToCopy = content.text!;
-                      return MessageWidget(
-                        text: content.text,
-                        image: content.image,
-                        isFromUser: content.fromUser,
-                      );
-                    },
-                    itemCount: _generatedContent.length,
-                  )
-                : ListView(
-                    children: const [
-                      Text(
-                        'No API key found. Please provide an API Key using '
-                        "'--dart-define' to set the 'API_KEY' declaration.",
-                      ),
-                    ],
-                  ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 25,
-              horizontal: 15,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            inputTextField(),
+            SizedBox(
+              height: 15,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox.square(dimension: 15),
-                 //copy button
-                IconButton(
+            Expanded(
+              child: _apiKey.isNotEmpty
+                  ? ListView.builder(
+                      controller: _scrollController,
+                      itemBuilder: (context, idx) {
+                        final content = _generatedContent[idx];
+                        contentToCopy = content.text!;
+                        return Column(
+                          children: [
+                            MessageWidget(
+                              text: content.text,
+                              image: content.image,
+                              isFromUser: content.fromUser,
+                            ),
+                            MessageWidget(
+                              text: userList[idx],
+                              image: content.image,
+                              isFromUser: true,
+                            ),
+                          ],
+                        );
+                      },
+                      itemCount: userList.length,
+                    )
+                  : ListView(
+                      children: const [
+                        Text(
+                          "خلل في جلب الـAPI.",
+                        ),
+                      ],
+                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 25,
+                horizontal: 15,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox.square(dimension: 15),
+                  //copy button
+                  IconButton(
                     onPressed: () async {
                       await Clipboard.setData(
-                        ClipboardData(text: contentToCopy));
+                          ClipboardData(text: contentToCopy));
                       // copied successfully
-                      ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('تم النسخ بنجاح'),));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('تم النسخ بنجاح'),
+                      ));
                       print(contentToCopy);
                     },
                     icon: Icon(
@@ -178,26 +187,26 @@ class _ChatWidgetState extends State<ChatWidget> {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                
-               
-                
-                if (!_loading)
-                  _generatedContent.isEmpty ? Container() : IconButton(
-                    onPressed: () async {
-                      _sendChatMessage(chatTextCont.text);
-                    },
-                    icon: Icon(
-                      Icons.refresh,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  )
-                else
-                  const CircularProgressIndicator(),
-                  
-              ],
+
+                  if (!_loading)
+                    _generatedContent.isEmpty
+                        ? Container()
+                        : IconButton(
+                            onPressed: () async {
+                              _sendChatMessage(chatTextCont.text);
+                            },
+                            icon: Icon(
+                              Icons.refresh,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          )
+                  else
+                    const CircularProgressIndicator(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -208,15 +217,20 @@ class _ChatWidgetState extends State<ChatWidget> {
     });
 
     try {
+
+      userList.add(message);
       _generatedContent.add((image: null, text: message, fromUser: true));
       final response = await _chat.sendMessage(
-        Content.text(message),
+        Content.text("""انت تجيب فقط على الاسئلة المتعلقة بكرة القدم، اذا سألتك على اي شي غير ذلك قم بالاعتذار 
+        عند سؤال عن اي شيء يخص المملكة العربية السعودية أنت تقوم باضافة اكثر من ايموجي سعيد بالرد
+        لاتقم بكتابة ماذكرته سابقاً في ردك
+        $message"""),
       );
       final text = response.text;
       _generatedContent.add((image: null, text: text, fromUser: false));
 
       if (text == null) {
-        _showError('No response from API.');
+        _showError("لا يوجد رد من المصدر");
         return;
       } else {
         setState(() {
@@ -231,40 +245,6 @@ class _ChatWidgetState extends State<ChatWidget> {
       });
     } finally {
       _textController.clear();
-      setState(() {
-        _loading = false;
-      });
-      _textFieldFocus.requestFocus();
-    }
-  }
-
-  
-  Future<void> _greetingMessage(String message) async {
-   
-    try {
-      _generatedGreetingMessage.add((message));
-      final response = await _chat.sendMessage(
-        Content.text(message),
-      );
-      final text = response.text;
-      _generatedGreetingMessage.add((text!));
-
-      if (text == null) { //this should be replaying null
-        _showError('No response from API.');
-        return;
-      } else {
-        setState(() {
-          _loading = false;
-          _scrollDown();
-        });
-      }
-    } catch (e) {
-      _showError(e.toString());
-      setState(() {
-        _loading = false;
-      });
-    } finally {
-      // _textController.clear();
       setState(() {
         _loading = false;
       });
@@ -309,34 +289,34 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    isFromUser ? Container() :
-    Row(
-      mainAxisAlignment:
-          // isFromUser ? MainAxisAlignment.end : 
-          MainAxisAlignment.start,
-      children: [
-        Flexible(
-            child: Container(
-                constraints: const BoxConstraints(maxWidth: 520),
-                decoration: BoxDecoration(
-                  color: isFromUser
-                      ? Theme.of(context).colorScheme.primaryContainer
-                      : Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(18),
+    return isFromUser
+        ? Container()
+        : Row(
+            mainAxisAlignment:
+                isFromUser ? MainAxisAlignment.end :
+                MainAxisAlignment.start,
+            children: [
+              Flexible(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 520),
+                  decoration: BoxDecoration(
+                    color: isFromUser
+                        ? Theme.of(context).colorScheme.secondaryContainer
+                        : Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 20,
+                  ),
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: Column(children: [
+                    if (text case final text?) MarkdownBody(data: text),
+                    if (image case final image?) image,
+                  ]),
                 ),
-                padding: const EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 20,
-                ),
-                margin: const EdgeInsets.only(bottom: 8),
-                child: Column(children: [
-                  if (text case final text?) MarkdownBody(data: text),
-                  if (image case final image?) image,
-                ]),
-                ),
-                ),
-      ],
-    );
+              ),
+            ],
+          );
   }
 }

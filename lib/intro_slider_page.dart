@@ -183,7 +183,9 @@ class _IntroPagerState extends State<IntroPager> {
                   style: TextStyle(
                     color: _currentIndex == 0 ? Colors.black : Colors.white,
                     fontSize: 18),
-                  textAlign: TextAlign.right,
+                  textAlign: _currentIndex == 0 ? 
+                  TextAlign.right : _currentIndex == 1 ?
+                  TextAlign.left : TextAlign.center,
                 ),
               ],
             ),

@@ -79,19 +79,6 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // AspectRatio(
-                //   aspectRatio: 16 / 9,
-                //   child: DChartPieO(
-                //     data: ordinalDataList,
-                //     customLabel: (ordinalData, index) {
-                //       return '${ordinalData.measure}%';
-                //     },
-                //     configRenderPie: ConfigRenderPie(
-                //       strokeWidthPx: 2,
-                //       arcLabelDecorator: ArcLabelDecorator(),
-                //     ),
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 5, left: 40, right: 40, bottom: 20),
@@ -200,10 +187,10 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                                     "assets/images/football_loading.json"),
                               ));
                         }
-
+        
                         //get data snapshot (document) from your collection
                         final playerdata = snapshot.data?.docs;
-
+        
                         if (playerdata!.isEmpty) {
                           //if there is no documents found in your collection
                           return const Text("لا توجد بيانات");
@@ -265,121 +252,123 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                 const SizedBox(height: 16),
                 Expanded(
                   flex: 1,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, left: 40, right: 40, bottom: 20),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: mainColor,
-                                padding: EdgeInsets.all(15)),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const PlayerTraining(),
-                                ),
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('تدريبات اللاعبين',
-                                    style: TextStyle(
-                                        color: yellowColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600)),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Icon(
-                                  Icons.sports,
-                                  color: yellowColor,
-                                  size: 24,
-                                ),
-                              ],
-                            )),
-                      ),
-                      Text(
-                          "يوفر لك الذكاء الاصطناعي قائمة مختلفة بتدريبات اللاعبين"),
-
-                     //stadium buttons
-                     SizedBox(height: 20,),
-                     Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, left: 40, right: 40, bottom: 20),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: mainColor,
-                                padding: EdgeInsets.all(15)),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const StudiumPage(),
-                                ),
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('ملاعب كرةالقدم',
-                                    style: TextStyle(
-                                        color: yellowColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600)),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Icon(
-                                  Icons.place,
-                                  color: yellowColor,
-                                  size: 24,
-                                ),
-                              ],
-                            )),
-                      ),
-                      Text(
-                          "نقدم لك قائمة لملاعب كرة القدم في المملكة"),
-
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5, left: 40, right: 40, bottom: 20),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: mainColor,
+                                  padding: EdgeInsets.all(15)),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const PlayerTraining(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('تدريبات اللاعبين',
+                                      style: TextStyle(
+                                          color: yellowColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600)),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Icon(
+                                    Icons.sports,
+                                    color: yellowColor,
+                                    size: 24,
+                                  ),
+                                ],
+                              )),
+                        ),
+                        Text(
+                            "يوفر لك الذكاء الاصطناعي قائمة مختلفة بتدريبات اللاعبين"),
+                            
+                       //stadium buttons
+                       SizedBox(height: 20,),
+                       Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5, left: 40, right: 40, bottom: 20),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: mainColor,
+                                  padding: EdgeInsets.all(15)),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const StudiumPage(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('ملاعب كرة القدم',
+                                      style: TextStyle(
+                                          color: yellowColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600)),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Icon(
+                                    Icons.place,
+                                    color: yellowColor,
+                                    size: 24,
+                                  ),
+                                ],
+                              )),
+                        ),
+                        Text(
+                            "نقدم لك قائمة لملاعب كرة القدم في المملكة"),
+                            
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
         ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     showDialog(
-      //         context: context,
-      //         builder: (BuildContext) {
-      //           return AlertDialog(
-      //             content: Container(
-      //               height: 350,
-      //               width: 350,
-      //               child: Column(
-      //                 children: [
-      //                   Expanded(
-      //                     child: ChatScreen(),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           );
-      //         });
-      //   },
-      //   tooltip: "أنا هنا لمساعدتك",
-      //   backgroundColor: mainColor,
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       Icon(
-      //         Icons.assistant,
-      //         color: yellowColor,
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext) {
+                return AlertDialog(
+                  content: Container(
+                    height: 350,
+                    width: 350,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ChatScreen(),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        },
+        tooltip: "أنا هنا لمساعدتك",
+        backgroundColor: mainColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.assistant,
+              color: yellowColor,
+            ),
+          ],
+        ),
+      ),
       ),
     );
   }

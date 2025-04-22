@@ -29,23 +29,17 @@ String promptText = "";
 String buttonsText = "";
 
 class _TextFromImageState extends State<TextFromImage> {
-  late VideoPlayerController _controller;
+  TextEditingController playerNameCont = TextEditingController();
+  TextEditingController playerNumberont = TextEditingController();
+  TextEditingController playerPositionCont = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-      ),
-    );
-
-    _controller.dispose();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -93,6 +87,106 @@ class _TextFromImageState extends State<TextFromImage> {
                     ),
                   ],
                 ),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext) {
+                              return AlertDialog(
+                                title: Text("حذف اللاعب"),
+                                content: Text(
+                                    "سيتم حذف بيانات اللاعب ${widget.playerName} نهائياً"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () async {
+                                        await FirebaseFirestore.instance
+                                            .collection("players")
+                                            .doc(widget.playerID)
+                                            .delete();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "حذف",
+                                        style: TextStyle(color: redColor),
+                                      )),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: mainColor),
+                                      onPressed: () {},
+                                      child: Text(
+                                        "تراجع",
+                                        style: TextStyle(color: yellowColor),
+                                      ))
+                                ],
+                              );
+                            });
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: redColor,
+                      )),
+
+                  //edit data
+                  IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext) {
+                              return Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: StatefulBuilder(
+                                  builder: (context, setState) {
+                                    return AlertDialog(
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text("تعديل بيانات اللاعب"),
+                                          Text(
+                                            "سيتم الخروج من الواجهة الحالية لأتمام عملية التعديل",
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        ],
+                                      ),
+                                      content: SizedBox(
+                                        height: 300,
+                                        child: Column(
+                                          children: [
+                                            addPlayerContainer(
+                                                playerNameCont,
+                                                "اسم اللاعب الثنائي",
+                                                "اسم اللاعب", "name"),
+                                            addPlayerContainer(playerNumberont,
+                                                "رقم اللاعب", "رقم اللاعب", "number"),
+                                            addPlayerContainer(
+                                                playerPositionCont,
+                                                "حارس مرمى - دفاع - هجوم او وسط",
+                                                "موقع اللاعب", "position"),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              playerNameCont.clear();
+                                              playerNumberont.clear();
+                                              playerPositionCont.clear();
+                                            },
+                                            child: Text("إلغاء"))
+                                      ],
+                                    );
+                                  },
+                                ),
+                              );
+                            });
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                        color: orangeColor,
+                      ))
+                ],
                 foregroundColor: Colors.black,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -479,6 +573,45 @@ class _TextFromImageState extends State<TextFromImage> {
                     )
                   : Container()),
         ),
+      ),
+    );
+  }
+
+  Widget addPlayerContainer(
+    TextEditingController pController,
+    String pName,
+    String pLabel,
+    String fieldTitle
+  ) {
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15), color: mainColor),
+      child: TextFormField(
+        controller: pController,
+        style: TextStyle(color: yellowColor),
+        decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: pName,
+            labelText: pLabel,
+            hintStyle: TextStyle(color: Colors.white54),
+            labelStyle: TextStyle(color: yellowColor),
+            suffixIcon: IconButton(
+                onPressed: () async {
+                  await FirebaseFirestore.instance
+                      .collection("players")
+                      .doc(widget.playerID)
+                      .update({
+                    fieldTitle: playerNameCont.text,
+                  });
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.edit,
+                  color: orangeColor,
+                ))),
       ),
     );
   }

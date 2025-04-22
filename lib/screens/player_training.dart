@@ -26,41 +26,13 @@ String promptText = "";
 String buttonsText = "";
 
 class _PlayerTrainingState extends State<PlayerTraining> {
-  late VideoPlayerController _controller;
-// late Future<void> _initializeVideoPlayerFuture;
   @override
   void initState() {
     super.initState();
-    // Start the player as soon as the app is displayed.
-    // player.setSource(AssetSource('palming.mp3'));
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //   await player.setSource(AssetSource('palming-football-34928.mp3'));
-    //   await player.resume();
-    // });
-
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-      ),
-    );
-
-    // _initializeVideoPlayerFuture = _controller.initialize();
-    // Ensure disposing of the VideoPlayerController to free up resources.
-    _controller.dispose();
-
-    // _controller = VideoPlayerController.networkUrl(Uri.parse(
-    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
-    //   ..initialize().then((_) {
-    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-    //     setState(() {});
-    //   });
   }
 
   @override
   void dispose() {
-    // Ensure disposing of the VideoPlayerController to free up resources.
-    _controller.dispose();
     super.dispose();
   }
 
@@ -146,8 +118,6 @@ class _PlayerTrainingState extends State<PlayerTraining> {
                                                   "تدريبات حارس المرمى";
                                               isPressed = true;
                                             });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
                                           },
                                           icon: Text("تدريبات حارس المرمى",
                                               style: TextStyle(
@@ -177,9 +147,7 @@ class _PlayerTrainingState extends State<PlayerTraining> {
                                                   "تدريبات لاعبي الدفاع";
                                               isPressed = true;
                                             });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
-                                          },
+                                           },
                                           icon: Text("تدريبات لاعبي الدفاع",
                                               style: TextStyle(
                                                   color: yellowColor,
@@ -208,8 +176,6 @@ class _PlayerTrainingState extends State<PlayerTraining> {
                                                   "تدريبات لاعبي الظهير/الوسط";
                                               isPressed = true;
                                             });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
                                           },
                                           icon: Text(
                                               "تدريبات لاعبي الظهير/الوسط",
@@ -240,10 +206,7 @@ class _PlayerTrainingState extends State<PlayerTraining> {
                                               buttonsText =
                                                   "تدريبات لاعبي الهجوم";
                                               isPressed = true;
-                                            });
-                                            // _controller =
-                                            // VideoPlayerController.file(mediaProvider.bytes);
-                                          },
+                                            });},
                                           icon: Text("تدريبات لاعبي الهجوم",
                                               style: TextStyle(
                                                   color: mainColor,
@@ -382,55 +345,19 @@ class _PlayerTrainingState extends State<PlayerTraining> {
               ],
             ),
             floatingActionButton: isPressed
-                ? Row(
-                  children: [
-                    FloatingActionButton(
-                        backgroundColor: mainColor,
-                        onPressed: () {
-                          setState(() {
-                            isPressed = false;
-                          });
-                        },
-                        tooltip: "العودة للصفحة السابقة",
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: yellowColor,
-                        ),
-                      ),
-                FloatingActionButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext) {
-                return AlertDialog(
-                  content: Container(
-                    height: 350,
-                    width: 350,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ChatScreen(),
-                        ),
-                      ],
+                ? FloatingActionButton(
+                    backgroundColor: mainColor,
+                    onPressed: () {
+                      setState(() {
+                        isPressed = false;
+                      });
+                    },
+                    tooltip: "العودة للصفحة السابقة",
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: yellowColor,
                     ),
-                  ),
-                );
-              });
-        },
-        tooltip: "أنا هنا لمساعدتك",
-        backgroundColor: mainColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.assistant,
-              color: yellowColor,
-            ),
-          ],
-        ),
-      ),
-                  ],
-                )
+                  )
                 : Container()),
       ),
     );
