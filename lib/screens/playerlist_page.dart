@@ -6,6 +6,7 @@ import 'package:flutter_gemini/screens/text_from_text.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:d_chart/d_chart.dart';
+import '../chatbot_page.dart';
 import 'colours.dart';
 import 'player_training.dart';
 
@@ -310,11 +311,38 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: mainColor,
-          onPressed: (){},
-          child: Icon(Icons.sports_soccer, color: yellowColor,),
-          ),
+          floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext) {
+                return AlertDialog(
+                  content: Container(
+                    height: 350,
+                    width: 350,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ChatScreen(),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        },
+        tooltip: "أنا هنا لمساعدتك",
+        backgroundColor: mainColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.assistant,
+              color: yellowColor,
+            ),
+          ],
+        ),
+      ),
       ),
     );
   }

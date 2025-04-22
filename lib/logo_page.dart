@@ -10,45 +10,49 @@ class LogoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 3), (){
-      Navigator.push(context, MaterialPageRoute(
-        builder: (context) => IntroPager()
-        // PlayerlistPage(title: '⚽️ PHOENIX GOAL ⚽️',)
-        ));
+    Future.delayed(Duration(seconds: 5), () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => IntroPager()));
     });
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-          child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            image: DecorationImage(
-                image: AssetImage(
-                  'assets/images/soccer_pattern.jpeg',
-                ),
-                alignment: Alignment.bottomCenter,
-                fit: BoxFit.cover,
-                opacity: .2)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  "assets/images/logo.png",
-                  height: 250,
-                )),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "مُسـاعدك الذكـي",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      )),
+      body: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => IntroPager()));
+        },
+        child: Center(
+            child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/soccer_pattern.jpeg',
+                  ),
+                  alignment: Alignment.bottomCenter,
+                  fit: BoxFit.cover,
+                  opacity: .2)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    height: 250,
+                  )),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "مُسـاعدك الذكـي",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        )),
+      ),
       bottomNavigationBar: BottomAppBar(
         height: 50,
         color: mainColor,

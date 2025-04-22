@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/screens/colours.dart';
 
+import 'screens/playerlist_page.dart';
+
 // final List<SingleIntroScreen> pages = [
 //   const SingleIntroScreen(
 //     title: 'Welcome to the Event Management App !',
@@ -29,7 +31,8 @@ class IntroPager extends StatefulWidget {
 
 class _IntroPagerState extends State<IntroPager> {
   int _currentIndex = 0;
-  PageController controller=PageController();
+  PageController _pageController = PageController();
+  int _activePage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -39,42 +42,111 @@ class _IntroPagerState extends State<IntroPager> {
         body: Stack(
           children: [
             PageView(
-            // reverse: true,
-            physics: BouncingScrollPhysics(),
-            controller: controller,
-            onPageChanged: (num) {
-              setState(() {
-                _currentIndex = num;
-              });
-            },
-            children: [
-              _buildPage(
-                  'محلل رياضي آلي',
-                  'يقوم بتحليل فيديوهات اللاعب، كتابة نقاط القوة والضعف لديه، وتقديم رسم بياني بالنتيجة',
-                  Colors.yellow,
-                  'purple_bg'),
-              _buildPage(
-                  'Chatbot Feature',
-                  'Offers training steps and advice for players.',
-                  Colors.purple,
-                  'yellow_bg'),
-              _buildPage('Stadium List', 'Provides a list of stadiums.',
-                  Colors.green, 'green_bg'),
-            ],
+              // reverse: true,
+              physics: BouncingScrollPhysics(),
+              controller: _pageController,
+              onPageChanged: (num) {
+                setState(() {
+                  _currentIndex = num;
+                });
+              },
+              children: [
+                _buildPage(
+                    'محلل رياضي آلي',
+                    'يقوم بتحليل فيديوهات اللاعب، كتابة نقاط القوة والضعف لديه، وتقديم رسم بياني بالنتيجة',
+                    Colors.yellow,
+                    'purple_bg'),
+                _buildPage(
+                    'مساعد مخصص لك',
+                    'يقدم لك اقتراحات لتدريبات اللاعبين، كما تستطيع سؤاله بنفسك!',
+                    Colors.purple,
+                    'yellow_bg'),
+                _buildPage('احدث الملاعب بين يديك', 
+                'نقدم لك اقتراحات ﻷفضل الملاعب في المملكة، مما يسهل عليك البدء في معسكرك القادم',
+                    Colors.green, 'green_bg'),
+              ],
             ),
 
             //nextButton
-            ElevatedButton(onPressed: (){}, child: Text("التالي"))
+            Positioned(
+                bottom: 15,
+                left: 1,
+                right: 1,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _currentIndex > 0
+                          ? ElevatedButton(
+                              onPressed: () {
+                                _pageController.previousPage(
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.linear,
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "السابق",
+                                  style:
+                                      TextStyle(color: mainColor, fontSize: 16),
+                                ),
+                              ),
+                            )
+                          : SizedBox(),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainColor
+                        ),
+                        onPressed: () {
+                          _currentIndex == 2
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlayerlistPage(
+                                            title: '⚽️ PHOENIX GOAL ⚽️',
+                                          )))
+                              : _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.linear,
+                                );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            _currentIndex < 2 ? "التالي" : "ابدأ الآن",
+                            style: TextStyle(
+                                color: yellowColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ]))
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPage(String title, 
-  String details, 
-  Color color, 
-  String bgImage) {
+  void onNextPage() {
+    if (_activePage < _currentIndex - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.linear,
+      );
+    }
+  }
+
+  void onPreviousPage() {
+    if (_activePage < _currentIndex + 1) {
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.linear,
+      );
+    }
+  }
+
+  Widget _buildPage(String title, String details, Color color, String bgImage) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -88,30 +160,50 @@ class _IntroPagerState extends State<IntroPager> {
               opacity: 1)),
       child: Center(
         child: Align(
-          alignment: Alignment.centerRight,
+          alignment: _currentIndex == 0 ? Alignment.centerRight :
+          _currentIndex == 1 ? Alignment.centerLeft : Alignment.center,
           child: Container(
             width: 400,
             height: 200,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
                 color: color,
-                borderRadius: BorderRadius.only(
+                borderRadius:
+                _currentIndex == 0 ?
+                 BorderRadius.only(
                   topLeft: Radius.circular(20),
                   bottomLeft: Radius.circular(20),
-                )),
+                ) : _currentIndex == 1 ? 
+                BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ) : BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                )
+                ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: _currentIndex == 0 ? CrossAxisAlignment.start
+              : _currentIndex == 1 ? CrossAxisAlignment.end : CrossAxisAlignment.center,
               children: [
                 Text(
                   title,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  textAlign: _currentIndex == 0 ? 
+                  TextAlign.right : _currentIndex == 1 ?
+                  TextAlign.left : TextAlign.center,
+                  style: TextStyle(
+                    color: _currentIndex == 0 ? Colors.black : Colors.white,
+                    fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 16),
                 Text(
                   details,
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    color: _currentIndex == 0 ? Colors.black : Colors.white,
+                    fontSize: 18),
                   textAlign: TextAlign.right,
                 ),
               ],

@@ -49,6 +49,7 @@ dependencies:
   cloud_firestore:
   flutter_tts:
   introduction_screen:
+  flutter_markdown:
 
 dev_dependencies:
   flutter_test:
