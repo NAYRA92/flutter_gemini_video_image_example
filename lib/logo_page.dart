@@ -11,7 +11,8 @@ class LogoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3), (){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => PlayerlistPage(title: 'PHOENIX GOAL ⚽️',)));
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) => PlayerlistPage(title: '⚽️ PHOENIX GOAL ⚽️',)));
     });
     return Scaffold(
       backgroundColor: Colors.white,
@@ -31,7 +32,7 @@ class LogoPage extends StatelessWidget {
       height: 50,
       color: mainColor,
       child: Text(
-        "A PROJECT CREATED FOR AI LEAGUE 2025 - SAUDIA",
+        "A PROJECT CREATED FOR AI LEAGUE Hackathon 2025 - SCAI 2025",
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 14,

@@ -238,7 +238,7 @@ class _PlayerlistPageState extends State<PlayerlistPage> {
                                         ),
                                       );
                                     },
-                                    icon: Icon(Icons.sports_soccer)),
+                                    icon: Icon(Icons.open_with)),
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
