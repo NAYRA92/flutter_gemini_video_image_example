@@ -57,7 +57,7 @@ class LogoPage extends StatelessWidget {
         height: 50,
         color: mainColor,
         child: Text(
-          "A PROJECT CREATED FOR AI LEAGUE Hackathon 2025 - SCAI 2025",
+          "A PROJECT CREATED FOR AI LEAGUE 2025 - SCAI 2025",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 14, color: Colors.white),
         ),

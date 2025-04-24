@@ -350,6 +350,7 @@ class _PlayerTrainingState extends State<PlayerTraining> {
                     onPressed: () {
                       setState(() {
                         isPressed = false;
+                        geminiProvider.response = null;
                       });
                     },
                     tooltip: "العودة للصفحة السابقة",

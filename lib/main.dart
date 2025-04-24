@@ -10,13 +10,13 @@ import 'screens/colours.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp( //unerror will appear here, but it will go as soon as you import the needed Firebase packages
-  //     options: FirebaseOptions(
-  //         apiKey: "AIzaSyC30CkY6t87r9U8m0x5-2sXFQah7XCVvq4", //you will find apiKey, appId ... etc indside the google-services.json file that you download from firebase console!
-  //         appId: "343147209763",
-  //         messagingSenderId: "sendid",
-  //         projectId: "mytestproject-202406",
-  //         storageBucket: "mytestproject-202406.appspot.com")); 
+  await Firebase.initializeApp( //unerror will appear here, but it will go as soon as you import the needed Firebase packages
+      options: FirebaseOptions(
+          apiKey: "AIzaSyC30CkY6t87r9U8m0x5-2sXFQah7XCVvq4", //you will find apiKey, appId ... etc indside the google-services.json file that you download from firebase console!
+          appId: "343147209763",
+          messagingSenderId: "sendid",
+          projectId: "mytestproject-202406",
+          storageBucket: "mytestproject-202406.appspot.com")); 
   runApp(const MyApp());
 }
 
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
         title: '⚽️ PHOENIX GOAL ⚽️',
-        home: ChatScreen(),
+        home: LogoPage(),
       ),
     );
   }

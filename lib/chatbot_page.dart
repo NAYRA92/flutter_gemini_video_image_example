@@ -144,15 +144,10 @@ class _ChatWidgetState extends State<ChatWidget> {
                               image: content.image,
                               isFromUser: content.fromUser,
                             ),
-                            MessageWidget(
-                              text: userList[idx],
-                              image: content.image,
-                              isFromUser: true,
-                            ),
                           ],
                         );
                       },
-                      itemCount: userList.length,
+                      itemCount: _generatedContent.length,
                     )
                   : ListView(
                       children: const [
@@ -289,12 +284,10 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isFromUser
-        ? Container()
-        : Row(
+    return Row(
             mainAxisAlignment:
-                isFromUser ? MainAxisAlignment.end :
-                MainAxisAlignment.start,
+                isFromUser ? MainAxisAlignment.start :
+                MainAxisAlignment.end,
             children: [
               Flexible(
                 child: Container(
