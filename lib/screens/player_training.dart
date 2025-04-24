@@ -8,7 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-import '../chatbot_page.dart';
+import 'chatbot_page.dart';
 
 //https://pixabay.com/sound-effects/search/football/
 //https://www.freepik.com/

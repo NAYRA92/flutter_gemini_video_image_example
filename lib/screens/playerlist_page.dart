@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/screens/player_scan.dart';
-import 'package:flutter_gemini/studium_page.dart';
+import 'package:flutter_gemini/screens/studium_page.dart';
 import 'package:lottie/lottie.dart';
 import 'package:d_chart/d_chart.dart';
-import '../chatbot_page.dart';
+import 'chatbot_page.dart';
 import 'colours.dart';
 import 'player_training.dart';
 

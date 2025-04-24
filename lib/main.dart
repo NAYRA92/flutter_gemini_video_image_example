@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gemini/chatbot_page.dart';
+import 'package:flutter_gemini/screens/chatbot_page.dart';
 import 'package:flutter_gemini/logo_page.dart';
 import 'package:flutter_gemini/providers/gemini_provider.dart';
 import 'package:flutter_gemini/providers/media_provider.dart';
