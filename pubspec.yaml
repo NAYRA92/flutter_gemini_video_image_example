@@ -47,7 +47,7 @@ dependencies:
   change_app_package_name:
   firebase_core:
   cloud_firestore:
-  flutter_tts:
+  # flutter_tts:
   introduction_screen:
   flutter_markdown:
 
